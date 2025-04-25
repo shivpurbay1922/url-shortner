@@ -1,0 +1,8 @@
+router.get('/:shortId', async (req, res) => {
+  const url = await Url.findOne({ shortId: req.params.shortId });
+  if (!url) return res.status(404).send('Not found');
+
+  url.clicks++;
+  await url.save();
+  res.redirect(url.fullUrl);
+});
